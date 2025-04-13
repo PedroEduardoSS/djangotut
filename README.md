@@ -1,0 +1,2 @@
+# djangotut
+Learning Django Framework
