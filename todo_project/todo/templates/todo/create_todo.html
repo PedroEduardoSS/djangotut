@@ -1,0 +1,7 @@
+<h1>Add Todo</h1>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="task" placeholder="Enter your task">
+    <button type="submit">Add Task</button>
+</form>
+<a href="{% url 'list_todos' %}">Back to list</a>
