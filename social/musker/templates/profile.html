@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    {% if profile %}
+
+        <h1>{{ profile.user.username }}'s profile</h1>
+        {% if meeps %}
+            {% for meep in meeps %}
+                {{ meep }} <br>
+            {% endfor %}
+        {% endif %}
+
+        <strong>Follows</strong><br>
+        {% for following in profile.follows.all %}
+            <a href="{% url 'profile' following.user.id %}">
+                @{{ following }}
+            </a>
+        {% endfor %}
+        <br><br>
+        <strong>Followed by</strong>
+        {% for following in profile.followed_by.all %}
+            <a href="{% url 'profile' following.user.id %}">
+                @{{ following }}
+            </a>
+        {% endfor %}
+
+        <form action="" method=POST>
+            {% csrf_token %}
+            {% if profile in user.profile.follows.all%}
+                <button class="btn btn-outline-danger" name="follow" value="unfollow" type="submit">
+                    Unfollow @{{ profile.user.username|lower }}
+                </button>
+            {% else %}
+                <button class="btn btn-outline-success  name="follow" value="follow" type="submit">
+                    Follow @{{ profile.user.username|lower }}
+                </button>
+            {% endif %}
+        </form>
+    
+    {% endif %}
+
+{% endblock %}
